@@ -1,0 +1,24 @@
+Graph partitioning library. 
+
+This library is based on algorithms from next papers:
+[1] G. Karypis and V. Kumar. A fast and high quality multilevel scheme for
+    partitioning irregular graphs // SIAM Journal on Scientific Computing,
+    1999, Vol. 20, No. 1, P.359-392.
+[2] B. Hendrickson and R.W. Leland. A Multi-Level Algorithm For Partitioning
+    Graphs // Proceedings of ACM/IEEE conference on Supercomputing, 1995.
+[3] K. Schloegel, G. Karypis and V. Kumar. Graph Partitioning for
+    High Performance Scientific Simulations // Sourcebook of parallel
+    computing, 2003. - P. 491-541.
+[4] B.W. Kernighan and S. Lin. An Efficient Heuristic Procedure for
+    Partitioning Graphs // Bell System Technical Journal, Vol. 49,
+    1970. - P. 291-307.
+[5] C.M. Fiduccia and R.M. Mattheyses. A linear-time heuristic for improving
+    network partitions // Proc. of Conference "Design Automation",
+    1982. – P. 175-181.
+
+(C) 2007-2010 Mikhail Kurnosov <mkurnosov@gmail.com>
+
+Supported graphs (tested):
+Number of vertices: 2^20 (1048576).
+Number of edges: 20447232.
+Maximal value of edge weight: 2^20.
