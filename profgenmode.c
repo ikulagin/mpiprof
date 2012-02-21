@@ -1,13 +1,15 @@
 #include "profgenmode.h"
-
+#include "log.h"
 reqlist_t *reqlist = NULL;
 commtable_t *commtable = NULL;
 
 void profgenmode_init()
 {
-    fprintf(stderr, "INIT START\n");
+    log_opt.output = DEVCONSOLE;
+    log_opt.tracemask = TRACEMASKDEF;
+    apptrace(TRACE_DBG_BIT , "INIT START\n");
     if ((mpipgo_graph = getenv("MPIPGO_GRAPH")) == NULL) {
-        fprintf(stderr, "MPIPGO_GRAPH not found\n");
+        apptrace(TRACE_ERR_BIT, "MPIPGO_GRAPH not found\n");
         MPI_Abort(MPI_COMM_WORLD, -1);
     }
     
