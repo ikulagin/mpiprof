@@ -1,8 +1,8 @@
 COMPILPATH=~/mpich2-install/bin/
 CC=mpicc
-obj_profgen = wrappers_profgen.o reqlist.o communication.o profgenmode.o
+obj_profgen = wrappers_profgen.o reqlist.o communication.o profgenmode.o log.o
 
-obj_profuse = mapping.o profusemode.o wrappers_profuse.o subsystem.o algo.o
+obj_profuse = mapping.o profusemode.o wrappers_profuse.o subsystem.o algo.o log.o
 
 Wrappers_profgen_.a: ${obj_profgen} ${obj_profuse}
 	ar cr libWrappers_profgen_.a ${obj_profgen}
@@ -24,6 +24,7 @@ wrappers_profuse.o:	wrappers_profuse.c
 mapping.o:		mapping.c
 subsystem.o:            subsystem.c
 algo.o:                 algo.c
+log.o:					log.c
 
 clean:
 	rm -f *.o
