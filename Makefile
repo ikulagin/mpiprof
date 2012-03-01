@@ -10,7 +10,7 @@ gpart_dir=$(topdir)/src/gpart
 
 all: mpiprof
 
-mpiprof: builddir gpart
+mpiprof: extlibdir builddir gpart
 	echo "[*] Building mpiprof $(mpiprof_dir)"
 	$(MAKE) -C $(mpiprof_dir) BUILDDIR=$(builddir)
 	./tools/generate-compiler-wrapper $(COMPILPATH)$(MPICC) $(builddir)/lib > $(builddir)/bin/mpiprofcc
@@ -30,6 +30,9 @@ builddir:
 	@mkdir -p $(builddir)
 	@mkdir -p $(builddir)/bin
 	@mkdir -p $(builddir)/lib
+
+extlibdir:
+	@mkdir -p $(topdir)/extlib
 
 clean:
 	@echo "[*] Cleaning $(builddir)"
