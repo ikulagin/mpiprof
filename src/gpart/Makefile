@@ -24,6 +24,7 @@ all: $(lib) $(example_generate) $(example_part)
 
 $(lib): $(lib_objs)
 	$(AR) rcs $@ $^
+	cp -f $(lib) $(LIBDIR)
 
 $(example_generate): $(example_generate_objs)
 	$(LD) $(LDFLAGS) $< -o $@ -L. -lgpart

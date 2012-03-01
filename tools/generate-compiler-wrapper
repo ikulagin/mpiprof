@@ -1,0 +1,22 @@
+#!/bin/sh
+
+#
+# Usage: generate-compiler-wrapper <mpicc> <path/to/mpiprof/library/dir>
+#
+
+if [ "$#" -le "1" ]; then
+	echo "Usage: <mpi-compiler-wrapper> <mpicompilerwrapper> <path/to/mpiprof/lib/dir>"
+	exit 1
+fi
+
+echo "#!/bin/sh"
+echo
+echo "compiling=\".*\ -c\ .*\""
+echo 
+echo "if [[ \" \$@ \" =~ \"\$compiling\" ]]; then"
+echo "    $1 \$@"
+echo "else"
+echo "    $1 \$@ -lmpiprof -lm -L$2"
+echo "fi"
+echo
+

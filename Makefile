@@ -1,31 +1,44 @@
-COMPILPATH=~/mpich2-install/bin/
-CC=mpicc
-obj_profgen = wrappers_profgen.o reqlist.o communication.o profgenmode.o log.o
+#
+# MPIPerf makefile.
+#
 
-obj_profuse = mapping.o profusemode.o wrappers_profuse.o subsystem.o algo.o log.o
+include Makefile.inc
 
-Wrappers_profgen_.a: ${obj_profgen} ${obj_profuse}
-	ar cr libWrappers_profgen_.a ${obj_profgen}
-	ar cr libWrappers_profuse_.a ${obj_profuse}
+builddir=$(topdir)/build
+mpiprof_dir=$(topdir)/src
+gpart_dir=$(topdir)/src/gpart
 
-%.o:
-	${COMPILPATH}${CC} -g -Wall -std=c99  -c $< 
+all: mpiprof
 
-gpart/libgpart.a:
-	make -C gpart
+mpiprof: builddir gpart
+	echo "[*] Building mpiprof $(mpiprof_dir)"
+	$(MAKE) -C $(mpiprof_dir) BUILDDIR=$(builddir)
+	./tools/generate-compiler-wrapper $(COMPILPATH)$(MPICC) $(builddir)/lib > $(builddir)/bin/mpiprofcc
+	chmod +x $(builddir)/bin/mpiprofcc
+	./tools/generate-compiler-wrapper $(COMPILPATH)$(MPICXX) $(builddir)/lib > $(builddir)/bin/mpiprofxx
+	chmod +x $(builddir)/bin/mpiprofxx
+	./tools/generate-compiler-wrapper $(COMPILPATH)$(MPIF77) $(builddir)/lib > $(builddir)/bin/mpiproff77
+	chmod +x $(builddir)/bin/mpiproff77
+	./tools/generate-compiler-wrapper $(COMPILPATH)$(MPIF90) $(builddir)/lib > $(builddir)/bin/mpiproff90
+	chmod +x $(builddir)/bin/mpiproff90
 
-wrappers_profgen.o:     wrappers_profgen.c
-reqlist.o:              reqlist.c
-communication.o:        communication.c
-nodes.o:                nodes.c
-profgenmode.o:          profgenmode.c
-profusemode.o:		profusemode.c
-wrappers_profuse.o:	wrappers_profuse.c
-mapping.o:		mapping.c
-subsystem.o:            subsystem.c
-algo.o:                 algo.c
-log.o:					log.c
+gpart:
+	echo "[*] Building gpart $(gpart_dir)"
+	$(MAKE) -C $(gpart_dir) LIBDIR=$(topdir)/extlib
+
+builddir:
+	@mkdir -p $(builddir)
+	@mkdir -p $(builddir)/bin
+	@mkdir -p $(builddir)/lib
 
 clean:
-	rm -f *.o
-	rm -f *.a
+	@echo "[*] Cleaning $(builddir)"
+	@rm -rf $(builddir)
+	@echo "[*] Cleaning $(mpiprof_dir)"
+	@rm -f $(mpiprof_dir)/*.o
+	@rm -f $(mpiprof_dir)/*.a
+	@echo "[*] Cleaning $(gpart_dir)"
+	@rm -f $(gpart_dir)/*.o
+	@rm -f $(gpart_dir)/*.a
+	@echo "[*] Cleaning $(topdir)/extlib"
+	@rm -f $(topdir)/extlib/*.a
