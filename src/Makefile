@@ -2,9 +2,10 @@ include ../Makefile.inc
 lib=$(topdir)/src/libmpiprof.a
 obj_profgen = wrappers_profgen.o reqlist.o communication.o profgenmode.o log.o
 obj_profuse = mapping.o profusemode.o wrappers_profuse.o subsystem.o algo.o log.o
+obj = control_monitoring.o wrappers_f.o
 
-$(lib): ${obj_profgen} ${obj_profuse}
-	ar cr $(lib) ${obj_profgen}
+$(lib): ${obj_profgen} ${obj_profuse} ${obj}
+	ar cr $(lib) ${obj_profgen} ${obj}
 	cp -f $(lib) $(BUILDDIR)/lib
 
 %.o:
@@ -21,6 +22,8 @@ mapping.o:		mapping.c
 subsystem.o:            subsystem.c
 algo.o:                 algo.c
 log.o:					log.c
+control_monitoring.o: control_monitoring.c
+wrappers_f.o:			wrappers_f.c
 
 clean:
 	rm -f *.o
