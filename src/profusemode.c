@@ -4,7 +4,7 @@
 MPI_Comm newcomm;
 MPI_Group worldgrouup, newgroup;
 
-void profuse_init()
+int mpiprofuse_init(int *argc, char ***argv)
 {
     int *ranks, old_rank;
     
@@ -58,8 +58,9 @@ void profuse_init()
         mapp_end = MPI_Wtime();
         test_begin = MPI_Wtime();
     }
+    return MPI_SUCCESS;
 }
-int profuse_comm_size(MPI_Comm comm, int *size)
+int mpiprofuse_comm_size(MPI_Comm comm, int *size)
 {
     int rc;
     
@@ -73,7 +74,7 @@ int profuse_comm_size(MPI_Comm comm, int *size)
     return rc;
 }
 
-int profuse_comm_rank(MPI_Comm comm, int *rank)
+int mpiprofuse_comm_rank(MPI_Comm comm, int *rank)
 {
     int rc;
     
@@ -87,7 +88,7 @@ int profuse_comm_rank(MPI_Comm comm, int *rank)
     return rc;
 }
 
-int profuse_abort(MPI_Comm comm, int errcode)
+int mpiprofuse_abort(MPI_Comm comm, int errcode)
 {
     int rc;
     
@@ -101,7 +102,7 @@ int profuse_abort(MPI_Comm comm, int errcode)
     return rc;
 }
 
-int profuse_comm_split(MPI_Comm comm, int color, int key, MPI_Comm *newcomm_)
+int mpiprofuse_comm_split(MPI_Comm comm, int color, int key, MPI_Comm *newcomm_)
 {
     int rc;
     
@@ -115,7 +116,7 @@ int profuse_comm_split(MPI_Comm comm, int color, int key, MPI_Comm *newcomm_)
     return rc;
 }
 
-int profuse_comm_dup(MPI_Comm comm, MPI_Comm *newcomm_)
+int mpiprofuse_comm_dup(MPI_Comm comm, MPI_Comm *newcomm_)
 {
     int rc;
     
@@ -129,7 +130,7 @@ int profuse_comm_dup(MPI_Comm comm, MPI_Comm *newcomm_)
     return rc;
 }
 
-int profuse_reduce(void *sendbuf, void *recvbuf, int count,
+int mpiprofuse_reduce(void *sendbuf, void *recvbuf, int count,
                    MPI_Datatype datatype, MPI_Op op, int root, MPI_Comm comm)
 {
     int rc;
@@ -144,7 +145,7 @@ int profuse_reduce(void *sendbuf, void *recvbuf, int count,
     return rc;
 }
 
-int profuse_allreduce(void *sendbuf, void *recvbuf, int count,
+int mpiprofuse_allreduce(void *sendbuf, void *recvbuf, int count,
                     MPI_Datatype datatype, MPI_Op op, MPI_Comm comm)
 {
     int rc;
@@ -159,7 +160,7 @@ int profuse_allreduce(void *sendbuf, void *recvbuf, int count,
     return rc;
 }
 
-int profuse_isend(void *buf, int count, MPI_Datatype datatype, int dest,
+int mpiprofuse_isend(void *buf, int count, MPI_Datatype datatype, int dest,
                   int tag, MPI_Comm comm, MPI_Request *request)
 {
     int  rc;
@@ -174,7 +175,7 @@ int profuse_isend(void *buf, int count, MPI_Datatype datatype, int dest,
     return rc;
 }
 
-int profuse_irecv(void *buf, int count, MPI_Datatype datatype, int source,
+int mpiprofuse_irecv(void *buf, int count, MPI_Datatype datatype, int source,
                   int tag, MPI_Comm comm, MPI_Request *request)
 {
     int rc;
@@ -189,7 +190,7 @@ int profuse_irecv(void *buf, int count, MPI_Datatype datatype, int source,
     return rc;
 }
 
-int profuse_barrier(MPI_Comm comm)
+int mpiprofuse_barrier(MPI_Comm comm)
 {
     int rc;
     
@@ -203,7 +204,7 @@ int profuse_barrier(MPI_Comm comm)
     return rc;
 }
 
-int profuse_bcast(void *buffer, int count, MPI_Datatype datatype, int root,
+int mpiprofuse_bcast(void *buffer, int count, MPI_Datatype datatype, int root,
                   MPI_Comm comm )
 {
     int rc;
@@ -218,7 +219,7 @@ int profuse_bcast(void *buffer, int count, MPI_Datatype datatype, int root,
     return rc;
 }
 
-int profuse_finalize()
+int mpiprofuse_finalize()
 {
     int rc;
     

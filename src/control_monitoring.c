@@ -20,6 +20,26 @@ int mpiprofgen_waitall(int count, MPI_Request *array_of_requests,
                        MPI_Status *array_of_statuses);
 int mpiprofgen_finalize();
 
+
+int mpiprofuse_init(int *argc, char ***argv);
+int mpiprofuse_comm_size(MPI_Comm comm, int *size);
+int mpiprofuse_comm_rank(MPI_Comm comm, int *rank);
+int mpiprofuse_abort(MPI_Comm comm, int errcode);
+int mpiprofuse_comm_split(MPI_Comm comm, int color, int key, MPI_Comm *newcomm_);
+int mpiprofuse_comm_dup(MPI_Comm comm, MPI_Comm *newcomm_);
+int mpiprofuse_reduce(void *sendbuf, void *recvbuf, int count,
+                   MPI_Datatype datatype, MPI_Op op, int root, MPI_Comm comm);
+int mpiprofuse_allreduce(void *sendbuf, void *recvbuf, int count,
+                      MPI_Datatype datatype, MPI_Op op, MPI_Comm comm);
+int mpiprofuse_isend(void *buf, int count, MPI_Datatype datatype, int dest,
+                  int tag, MPI_Comm comm, MPI_Request *request);
+int mpiprofuse_irecv(void *buf, int count, MPI_Datatype datatype, int source,
+                  int tag, MPI_Comm comm, MPI_Request *request);
+int mpiprofuse_barrier(MPI_Comm comm);
+int mpiprofuse_bcast(void *buffer, int count, MPI_Datatype datatype, int root,
+                  MPI_Comm comm );
+int mpiprofuse_finalize();
+
 control_mon_event_t *mpiprof_init(int mode)
 {
     control_mon_event_t *tmp;
@@ -49,6 +69,21 @@ control_mon_event_t *mpiprof_init(int mode)
 
     if (mode == MPIPROFUSE) {
         apptrace(TRACE_DBG_BIT, "select MPIPROFUSE\n");
+        tmp->mpiprof_abort = mpiprofuse_abort;
+        tmp->mpiprof_allreduce = mpiprofuse_allreduce;
+        tmp->mpiprof_barrier = mpiprofuse_barrier;
+        tmp->mpiprof_bcast = mpiprofuse_bcast;
+        tmp->mpiprof_comm_dup = mpiprofuse_comm_dup;
+        tmp->mpiprof_comm_rank = mpiprofuse_comm_rank;
+        tmp->mpiprof_comm_size = mpiprofuse_comm_size;
+        tmp->mpiprof_comm_split = mpiprofuse_comm_split;
+        tmp->mpiprof_reduce = mpiprofuse_reduce;
+        tmp->mpiprof_init = mpiprofuse_init;
+        tmp->mpiprof_isend = mpiprofuse_isend;
+        tmp->mpiprof_irecv = mpiprofuse_irecv;
+        tmp->mpiprof_wait = PMPI_Wait;
+        tmp->mpiprof_waitall = PMPI_Waitall;
+        tmp->mpiprof_finalize = mpiprofuse_finalize;
         return NULL;
     }
 
