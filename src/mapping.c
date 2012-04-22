@@ -72,51 +72,51 @@ int mapping_initialize(int commsize)
 int maping_allocate(int commsize, char *g, int *ranks, char *mpipgo_algo)
 {
     int i = 0;
-    csrgraph_t *graph;
-    
-    graph = csrgraph_load(g);
-    if (graph == NULL) {
-        fprintf(stderr, "gpart load error\n");
-        return -1;
-    }
-/*    for (i = 0; i < commsize; i++) {
-        printf("subset_nodes[%d] = %d\n", old_mapp[i],
-               subset_nodes[old_mapp[i]]);
-    }
-    for (i = 0; i < npart; i++) {
-        printf("pweights[%d] = %d\n", i, pweights[i]);
-    }
-*/
-    if (strcmp(mpipgo_algo, "gpart") == 0) {
-        if (gpart_partition_recursive(graph, pweights, npart, new_mapp) > 0) {
-            fprintf(stderr, "gpart partition error\n");
-            return -1;
-        }
-    } else if (strcmp(mpipgo_algo, "linear") == 0) {
-        linear(npart, pweights, new_mapp, commsize);
-    } else if (strcmp(mpipgo_algo, "rr") == 0) {
-        rr(npart, pweights, new_mapp, commsize);
-    }
-/*    
-    for (i = 0; i < commsize; i++) {
-        printf("old[%d] = %d || new[%d] = %d \n", i, old_mapp[i], i,
-               new_mapp[i]);
-    }
-*/
-    subsystem = subsystem_init(old_mapp, commsize, npart, pweights,
-                               subset_nodes);
-    if (subsystem == NULL) {
-        return -1;
-    }
-//    printf("stage 1\n");
-    for (i = 0; i < commsize; i++) {
-        ranks[subsystem_getproc(subsystem, new_mapp[i])] = i;
-    }
-/*    for (i = 0; i < commsize; i++) {
-        printf("ranks[%d] = %d\n", i, ranks[i]);
-    }
-*/
-    subsystem_free(subsystem, npart);
+//    csrgraph_t *graph;
+//
+//    graph = csrgraph_load(g);
+//    if (graph == NULL) {
+//        fprintf(stderr, "gpart load error\n");
+//        return -1;
+//    }
+///*    for (i = 0; i < commsize; i++) {
+//        printf("subset_nodes[%d] = %d\n", old_mapp[i],
+//               subset_nodes[old_mapp[i]]);
+//    }
+//    for (i = 0; i < npart; i++) {
+//        printf("pweights[%d] = %d\n", i, pweights[i]);
+//    }
+//*/
+//    if (strcmp(mpipgo_algo, "gpart") == 0) {
+//        if (gpart_partition_recursive(graph, pweights, npart, new_mapp) > 0) {
+//            fprintf(stderr, "gpart partition error\n");
+//            return -1;
+//        }
+//    } else if (strcmp(mpipgo_algo, "linear") == 0) {
+//        linear(npart, pweights, new_mapp, commsize);
+//    } else if (strcmp(mpipgo_algo, "rr") == 0) {
+//        rr(npart, pweights, new_mapp, commsize);
+//    }
+///*
+//    for (i = 0; i < commsize; i++) {
+//        printf("old[%d] = %d || new[%d] = %d \n", i, old_mapp[i], i,
+//               new_mapp[i]);
+//    }
+//*/
+//    subsystem = subsystem_init(old_mapp, commsize, npart, pweights,
+//                               subset_nodes);
+//    if (subsystem == NULL) {
+//        return -1;
+//    }
+////    printf("stage 1\n");
+//    for (i = 0; i < commsize; i++) {
+//        ranks[subsystem_getproc(subsystem, new_mapp[i])] = i;
+//    }
+///*    for (i = 0; i < commsize; i++) {
+//        printf("ranks[%d] = %d\n", i, ranks[i]);
+//    }
+//*/
+//    subsystem_free(subsystem, npart);
 
     return 0;
 }
