@@ -156,8 +156,6 @@ void mpi_wait_(MPI_Fint *request, MPI_Fint *status, MPI_Fint *ierr)
 
     *request = MPI_Request_c2f(tmp_request);
     MPI_Status_c2f(&tmp_status, status);
-
-    *ierr = (MPI_Fint)rc;
 }
 
 void mpi_waitall_(MPI_Fint *count, MPI_Fint array_of_request[],
